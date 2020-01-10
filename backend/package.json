@@ -13,8 +13,5 @@
   "engines": {
     "node": "12.*.*",
     "yarn": "1.*.*"
-  },
-  "dependencies": {
-    "express": "^4.17.1"
   }
 }
