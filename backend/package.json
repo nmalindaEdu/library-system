@@ -2,7 +2,10 @@
   "name": "mylibrary-back",
   "version": "1.0.0",
   "description": "backend",
-  "main": "index.js",
+  "main": "src/index.js",
+  "files": [
+    "src/"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
@@ -13,5 +16,16 @@
   "engines": {
     "node": "12.*.*",
     "yarn": "1.*.*"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "knex": "^0.20.7",
+    "mysql2": "^2.1.0"
   }
 }
