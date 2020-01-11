@@ -159,3 +159,16 @@ exports.update = async (req, res) => {
     });
   }
 };
+
+exports.deleteUser = async (req, res) => {
+  await knex('user')
+    .where('user_id', req.params.userId)
+    .del();
+
+  res.json({
+    status: 200,
+    success: true,
+    error: {},
+    message: `User ${req.params.userId} Successfully Deleted`
+  });
+};
