@@ -21,6 +21,14 @@ exports.create = async (req, res) => {
           .then(trx.commit)
           .catch(trx.rollback);
       });
+
+      res.json({
+        status: 200,
+        success: true,
+        id: userId,
+        error: {},
+        message: 'New User Created Successfully'
+      });
     } catch (error) {
       res.status(500).json(error);
     }

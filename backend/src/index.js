@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./config');
+const { autoLoadRoutes } = require('./utils/autoLoad');
 
 const setupApp = async () => {
   const app = express();
@@ -18,6 +19,15 @@ const setupApp = async () => {
   app.get('/', (req, res) => {
     res.send('LMS API SERVER!');
   });
+
+  try {
+    console.log('starting autoLoad');
+    await autoLoadRoutes(app);
+    console.log('after atoLoad');
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
 
   module.export = app.listen(app.get('port'), () => {
     console.log(`listening on *:${app.get('port')}`);
