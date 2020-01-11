@@ -1,6 +1,7 @@
 const knex = require('../../database');
 const { format } = require('date-fns');
 const { validateUser } = require('./user.validation');
+const { validateUserUpdate } = require('./user.update.validation');
 
 exports.create = async (req, res) => {
   let newUser = req.body;
@@ -75,5 +76,86 @@ exports.list = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ error });
+  }
+};
+
+exports.update = async (req, res) => {
+  const user = req.body;
+  const checkDuplicate = await knex('user')
+    .select('user_id')
+    .where('user_name', user.user_name);
+
+  const validationUpdateResult = validateUserUpdate(user);
+  if (validationUpdateResult === true) {
+    try {
+      if (checkDuplicate.length === 1) {
+        if (checkDuplicate[0].user_id === parseInt(req.params.userId, 0)) {
+          await knex('user')
+            .where('user_id', req.params.userId)
+            .update({
+              ...user,
+              ['user_password']: knex.raw(`SHA2(${user.user_password},224)`)
+            });
+
+          res.json({
+            status: 200,
+            success: true,
+            data: { ...user },
+            error: {},
+            message: `The user id ${req.params.userId} is Updated successfully`
+          });
+        } else {
+          res.json({
+            status: 'ERROR',
+            success: false,
+            data: {},
+            error: {
+              errorCode: 404,
+              errorMessage: 'Duplicate user name',
+              reference: 'User Update Reference'
+            }
+          });
+        }
+      } else if (checkDuplicate.length === 0) {
+        await knex('user')
+          .where('user_id', req.params.userId)
+          .update({
+            ...user,
+            ['user_password']: knex.raw(`SHA2(${user.user_password},224)`)
+          });
+
+        res.json({
+          status: 200,
+          success: true,
+          data: { ...user },
+          error: {},
+          message: `The user id ${req.params.userId} is Updated successfully`
+        });
+      } else {
+        res.json({
+          status: 'ERROR',
+          success: false,
+          data: {},
+          error: {
+            errorCode: 404,
+            errorMessage: 'Duplicate user name',
+            reference: 'User Update Reference'
+          }
+        });
+      }
+    } catch (error) {
+      res.status(500).json(error);
+    }
+  } else {
+    res.json({
+      status: 'ERROR',
+      success: false,
+      data: {},
+      error: {
+        errorCode: 422,
+        errorMessage: validationUpdateResult,
+        reference: 'User Update Validation Reference'
+      }
+    });
   }
 };

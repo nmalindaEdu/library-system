@@ -7,7 +7,7 @@ const userSchema = Joi.object().keys({
   ['user_password']: Joi.string().alphanum()
 });
 
-exports.validateUser = (user) => {
+exports.validateUserUpdate = (user) => {
   const { error } = userSchema.validate(user);
   if (error === undefined) {
     return true;
