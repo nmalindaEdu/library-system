@@ -33,7 +33,7 @@ exports.create = async (req, res) => {
         message: 'New User Created Successfully'
       });
     } catch (error) {
-      res.status(500).json(error);
+      res.status(500).json({ error });
     }
   } else {
     res.json({
@@ -45,5 +45,35 @@ exports.create = async (req, res) => {
         reference: 'User Validation Reference'
       }
     });
+  }
+};
+
+exports.list = async (req, res) => {
+  try {
+    const users = await knex('user')
+      .select('*')
+      .where('user_privilege', 'member');
+
+    if (users && users.length !== 0) {
+      res.json({
+        status: 200,
+        success: true,
+        data: users,
+        error: {}
+      });
+    } else {
+      res.json({
+        status: 'ERROR',
+        success: false,
+        data: [],
+        error: {
+          errorCode: 404,
+          errorMessage: 'No any data found',
+          reference: 'User Reference'
+        }
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ error });
   }
 };

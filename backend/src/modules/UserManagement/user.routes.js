@@ -1,6 +1,9 @@
 const { config } = require('../../config');
-const { create } = require('./user.controller');
+const { create, list } = require('./user.controller');
 
 exports.userRoutes = (app) => {
-  app.route(`${config.app.apiBase}/users`).post(create);
+  app
+    .route(`${config.app.apiBase}/users`)
+    .post(create)
+    .get(list);
 };
