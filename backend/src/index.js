@@ -4,7 +4,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./config');
-const { autoLoadRoutes } = require('./utils/autoLoad');
+// const { autoLoadRoutes } = require('./utils/autoLoad');
+const { userRoutes } = require('./modules/UserManagement/user.routes');
+const { errorHandler } = require('./utils/errorhandler');
 
 const setupApp = async () => {
   const app = express();
@@ -20,14 +22,16 @@ const setupApp = async () => {
     res.send('LMS API SERVER!');
   });
 
-  try {
-    console.log('starting autoLoad');
-    await autoLoadRoutes(app);
-    console.log('after atoLoad');
-  } catch (error) {
-    console.log(error);
-    return undefined;
-  }
+  userRoutes(app);
+  // try {
+  //   console.log('starting autoLoad');
+  //   await autoLoadRoutes(app);
+  //   console.log('after atoLoad');
+  // } catch (error) {
+  //   console.log(error);
+  //   return undefined;
+  // }
+  app.use(errorHandler);
 
   module.export = app.listen(app.get('port'), () => {
     console.log(`listening on *:${app.get('port')}`);

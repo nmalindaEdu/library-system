@@ -1,4 +1,5 @@
 const knex = require('../../database');
+const { format } = require('date-fns');
 const { validateUser } = require('./user.validation');
 
 exports.create = async (req, res) => {
@@ -9,15 +10,16 @@ exports.create = async (req, res) => {
   if (validationResult === true) {
     try {
       newUser = {
-        ['user_name']: newUser['user_name'],
-        ['user_password']: knex.raw(`SHA2(${newUser['user_password']},224)`),
-        ['user_privilege']: newUser['user_privilege'],
+        ['user_name']: newUser.user_name,
+        ['user_password']: knex.raw(`SHA2(${newUser.user_password},224)`),
+        ['user_privilege']: 'member',
         ['user_added_date']: date
       };
+
       knex.transaction((trx) => {
-        return knex('user')
-          .transacting(trx)
+        return trx
           .insert(newUser)
+          .into('user')
           .then(trx.commit)
           .catch(trx.rollback);
       });
@@ -25,7 +27,6 @@ exports.create = async (req, res) => {
       res.json({
         status: 200,
         success: true,
-        id: userId,
         error: {},
         message: 'New User Created Successfully'
       });

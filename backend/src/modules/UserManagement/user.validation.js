@@ -4,9 +4,7 @@ const userSchema = Joi.object().keys({
   ['user_name']: Joi.string().required(),
   ['user_password']: Joi.string()
     .alphanum()
-    .required(),
-  ['user_privilege']: Joi.string().required(),
-  ['user_added_date']: Joi.date().required()
+    .required()
 });
 
 exports.validateUser = (user) => {
