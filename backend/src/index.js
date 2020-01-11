@@ -5,8 +5,9 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const config = require('./config');
 // const { autoLoadRoutes } = require('./utils/autoLoad');
-const { userRoutes } = require('./modules/UserManagement/user.routes');
 const { errorHandler } = require('./utils/errorhandler');
+const { userRoutes } = require('./modules/UserManagement/user.routes');
+const { bookRoutes } = require('./modules/BookManagement/book.routes');
 
 const setupApp = async () => {
   const app = express();
@@ -23,6 +24,7 @@ const setupApp = async () => {
   });
 
   userRoutes(app);
+  bookRoutes(app);
   // try {
   //   console.log('starting autoLoad');
   //   await autoLoadRoutes(app);

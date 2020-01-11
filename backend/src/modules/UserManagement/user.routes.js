@@ -10,5 +10,4 @@ exports.userRoutes = (app) => {
     .route(`${config.app.apiBase}/users/:userId`)
     .put(update)
     .delete(deleteUser);
-  // .get(listEachCustomer)
 };
