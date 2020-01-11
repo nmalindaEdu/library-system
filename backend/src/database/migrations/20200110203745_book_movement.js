@@ -2,7 +2,7 @@
 'use strict';
 exports.up = async (knex) => {
   await knex.schema.createTable('book_movement', (table) => {
-    table.integer('book_movement_id').primary();
+    table.increments('book_movement_id').primary();
     table.integer('book_movement_book_id', 10).unsigned();
     table
       .foreign('book_movement_book_id')
@@ -20,15 +20,10 @@ exports.up = async (knex) => {
       .onUpdate('CASCADE')
       .onDelete('CASCADE')
       .withKeyName('FK_book_movement_2');
-
-    // .references('user_id')
-    // .inTable('user')
-    // .onDelete('CASCADE')
-    // .onUpdate('CASCADE')
-    // .index();
     table.date('book_movement_issue_date');
     table.time('book_movement_issue_time');
     table.date('book_movement_must_return_date');
+    table.string('book_movement_is_returned', 5).notNullable();
   });
 };
 

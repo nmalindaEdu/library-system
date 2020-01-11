@@ -2,7 +2,8 @@ const Joi = require('@hapi/joi');
 
 const bookSchema = Joi.object().keys({
   ['book_name']: Joi.string(),
-  ['book_author']: Joi.string()
+  ['book_author']: Joi.string(),
+  ['book_status']: Joi.string()
 });
 
 exports.validateBookUpdate = (book) => {
