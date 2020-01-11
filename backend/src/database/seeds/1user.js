@@ -7,6 +7,8 @@ exports.seed = async (knex) => {
     .del()
     .then(() => {
       return knex('user').insert({
+        ['user_full_name']: 'Niroshan Malinda',
+        ['user_tel_no']: '0714012234',
         ['user_name']: 'admin',
         ['user_password']: password,
         ['user_privilege']: 'admin',

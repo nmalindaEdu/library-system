@@ -10,6 +10,8 @@ exports.create = async (req, res) => {
   if (validationResult === true) {
     try {
       newUser = {
+        ['user_full_name']: newUser.user_full_name,
+        ['user_tel_no']: newUser.user_tel_no,
         ['user_name']: newUser.user_name,
         ['user_password']: knex.raw(`SHA2(${newUser.user_password},224)`),
         ['user_privilege']: 'member',
