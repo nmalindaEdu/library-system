@@ -45,7 +45,7 @@ export const fetchDashboardData = (booking) => {
   return { type: FETCH_DASHBOARD_DATA, booking };
 };
 
-export const fetchBookingStatus = (booking) => {
+export const setBookingStatus = (booking) => {
   return { type: FETCH_BOOK_STATUS, booking };
 };
 
