@@ -49,13 +49,7 @@ exports.create = async (req, res) => {
 
 exports.list = async (req, res) => {
   try {
-    const books = await knex('book')
-      .select('*')
-      .modify((query) => {
-        if (req.query.bookStatus !== 'All') {
-          query.where('book_status', req.query.bookStatus);
-        }
-      });
+    const books = await knex('book').select('*');
 
     if (books && books.length !== 0) {
       res.json({
