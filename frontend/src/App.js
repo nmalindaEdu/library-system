@@ -10,12 +10,14 @@ const App = () => {
   const Members = React.lazy(() =>
     import('./Containers/MemberManagement/User')
   );
+  const Books = React.lazy(() => import('./Containers/BookManagement/Book'));
 
   return (
     <Router>
       <Layout path='/'>
         <Dashboard path='/' />
         <Members path='/members' />
+        <Books path='/books' />
       </Layout>
     </Router>
   );

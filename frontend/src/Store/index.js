@@ -1,12 +1,13 @@
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { dashboardReducer, userReducer } from './reducers';
+import { dashboardReducer, userReducer, bookReducer } from './reducers';
 import initSagas from './initSagas';
 
 const getStore = () => {
   const reducers = combineReducers({
     dashboard: dashboardReducer,
-    user: userReducer
+    user: userReducer,
+    book: bookReducer
   });
 
   const composeEnhancers =
