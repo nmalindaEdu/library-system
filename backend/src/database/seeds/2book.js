@@ -16,7 +16,7 @@ exports.seed = async (knex) => {
           ['book_name']: 'Pikaso Artistic',
           ['book_author']: 'Don martin',
           ['book_added_date']: date,
-          ['book_status']: 'available'
+          ['book_status']: 'not available'
         },
         {
           ['book_name']: 'Lost Animal Kingdom ',
