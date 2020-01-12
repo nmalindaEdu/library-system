@@ -79,6 +79,40 @@ exports.list = async (req, res) => {
   }
 };
 
+exports.userById = async (req, res, next, id) => {
+  try {
+    const user = await knex('user')
+      .select(
+        'user_id',
+        'user_full_name',
+        'user_tel_no',
+        'user_name',
+        'user_privilege',
+        'user_added_date'
+      )
+      .where('user_id', req.params.user)
+      .first();
+
+    if (user && user.length !== 0) {
+      req.user = user;
+      next();
+    } else {
+      res.status(200).json({
+        error: 'error found',
+        message: `This user id ${id} is not found`,
+        success: false
+      });
+      next(new Error(`This user id ${id} is not found`));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.listEach = async (req, res) => {
+  res.status(200).json(req.user);
+};
+
 exports.update = async (req, res) => {
   const user = req.body;
   const checkDuplicate = await knex('user')

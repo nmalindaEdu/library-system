@@ -81,6 +81,33 @@ exports.list = async (req, res) => {
   }
 };
 
+exports.bookById = async (req, res, next, id) => {
+  try {
+    const book = await knex('book')
+      .select('*')
+      .where('book_id', req.params.book)
+      .first();
+
+    if (book && book.length !== 0) {
+      req.book = book;
+      next();
+    } else {
+      res.status(200).json({
+        error: 'error found',
+        message: `This book id ${id} is not found`,
+        success: false
+      });
+      next(new Error(`This book id ${id} is not found`));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.listEach = async (req, res) => {
+  res.status(200).json(req.book);
+};
+
 exports.update = async (req, res) => {
   const book = req.body;
   const checkDuplicate = await knex('book')

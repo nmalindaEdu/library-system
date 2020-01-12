@@ -1,5 +1,12 @@
 const { config } = require('../../config');
-const { create, list, update, deleteUser } = require('./user.controller');
+const {
+  create,
+  list,
+  update,
+  deleteUser,
+  userById,
+  listEach
+} = require('./user.controller');
 
 exports.userRoutes = (app) => {
   app
@@ -7,7 +14,10 @@ exports.userRoutes = (app) => {
     .post(create)
     .get(list);
   app
-    .route(`${config.app.apiBase}/users/:userId`)
+    .route(`${config.app.apiBase}/users/:user`)
+    .get(listEach)
     .put(update)
     .delete(deleteUser);
+
+  app.param(`user`, userById);
 };

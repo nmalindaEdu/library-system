@@ -61,7 +61,16 @@ exports.create = async (req, res) => {
 exports.list = async (req, res) => {
   try {
     const bookMovements = await knex('book_movement')
-      .select('*')
+      .select(
+        'book_name',
+        'user_full_name',
+        'book_movement_issue_date',
+        'book_movement_must_return_date',
+        'book_movement_is_returned'
+      )
+      .join('book', 'book_id', 'book_movement_book_id')
+      .join('user', 'user_id', 'book_movement_borrower_id')
+
       .modify((query) => {
         if (req.query.booking !== 'All') {
           query.where('book_movement_is_returned', req.query.booking);
