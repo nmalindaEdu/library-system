@@ -21,13 +21,13 @@ const dashboardReducer = (state = initialState, action) => {
       return {
         ...state,
         booking: action.booking,
-        loading: true
+        loading: false
       };
     case FETCH_DASHBOARD_DATA_SUCCESS:
       return {
         ...state,
         dashboardData: action.dashboardData,
-        loading: true
+        loading: false
       };
     case FETCH_DATA_FAIL:
       return {

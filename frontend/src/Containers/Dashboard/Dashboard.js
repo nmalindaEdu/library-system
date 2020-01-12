@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import CardHeader from '../../../Components/Card/CardHeader';
-import Card from '../../../Components/Card/Card';
-// import { GridContainer, GridItem } from '../../../Components/Grid';
+import CardHeader from '../../Components/Card/CardHeader';
+import Card from '../../Components/Card/Card';
+import { GridContainer, GridItem } from '../../Components/Grid';
 import {
   getDashboardBookStatus,
   getDashboardData,
@@ -13,7 +13,7 @@ import {
   fetchDashboardData
 } from '../../Store/reducers/dashboardReducer';
 import Select from '../../Components/select/select';
-import AdvanceTable from '../../../Components/Table/AdvanceTable';
+import AdvanceTable from '../../Components/Table/AdvanceTable';
 import status from '../utils/availability';
 import { dateComparatorRev } from '../utils/comparator';
 
@@ -34,15 +34,21 @@ const Dashboard = () => {
 
   const handleChangeBookStat = (status) => {
     onSetBookingStatus(status);
-    onFetchData(selectedFromDates, selectedToDates, shopsId);
+    onFetchData(status);
   };
 
   return (
     <>
       <Card>
-        <CardHeader
-          title='Books availability data'
-          action={
+        <CardHeader title='Librarian Dashboard' />
+        <GridContainer container spacing={4}>
+          <GridItem item xs={12} sm={4}>
+            {/* <DateField defaultDate={fromDate} change={handleChangeFromDate} /> */}
+          </GridItem>
+          <GridItem item xs={12} sm={4}>
+            {/* <DateFieldToDate defaultDate={toDate} change={handleChangeToDate} /> */}
+          </GridItem>
+          <GridItem item xs={12} sm={4}>
             <Select
               newId={bookStatus}
               array={status}
@@ -52,41 +58,44 @@ const Dashboard = () => {
               MenuLabel='label'
               change={handleChangeBookStat}
             />
-          }>
-          <AdvanceTable
-            isLoading={isLoading}
-            columns={[
-              {
-                title: 'Book',
-                field: 'book_name'
-              },
-              {
-                title: 'Borrower member',
-                field: 'user_full_name'
-              },
-              {
-                title: 'Book issued date',
-                field: 'book_movement_issue_date',
-                customSort: (a, b) =>
-                  dateComparatorRev(a, b, 'book_movement_issue_date')
-              },
+          </GridItem>
+        </GridContainer>
+      </Card>
+      <Card>
+        <CardHeader title='Books availability data' />
+        <AdvanceTable
+          isLoading={isLoading}
+          columns={[
+            {
+              title: 'Book',
+              field: 'book_name'
+            },
+            {
+              title: 'Borrower member',
+              field: 'user_full_name'
+            },
+            {
+              title: 'Book issued date',
+              field: 'book_movement_issue_date',
+              customSort: (a, b) =>
+                dateComparatorRev(a, b, 'book_movement_issue_date')
+            },
 
-              {
-                title: 'Must return date',
-                field: 'book_movement_must_return_date',
-                customSort: (a, b) =>
-                  dateComparatorRev(a, b, 'book_movement_must_return_date')
-              },
-              {
-                title: 'Is returned',
-                field: 'book_movement_is_returned',
-                type: 'numeric',
-                sorting: false
-              }
-            ]}
-            data={dashboardData}
-          />
-        </CardHeader>
+            {
+              title: 'Must return date',
+              field: 'book_movement_must_return_date',
+              customSort: (a, b) =>
+                dateComparatorRev(a, b, 'book_movement_must_return_date')
+            },
+            {
+              title: 'Is returned',
+              field: 'book_movement_is_returned',
+              type: 'numeric',
+              sorting: false
+            }
+          ]}
+          data={dashboardData}
+        />
       </Card>
     </>
   );
