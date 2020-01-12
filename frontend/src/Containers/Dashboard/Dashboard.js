@@ -16,6 +16,8 @@ import Select from '../../Components/select/select';
 import AdvanceTable from '../../Components/Table/AdvanceTable';
 import status from '../utils/availability';
 import { dateComparatorRev } from '../utils/comparator';
+import NavLink from '../../Components/NavLink/NavLink';
+import Button from '../../Components/Button/Button';
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -42,13 +44,13 @@ const Dashboard = () => {
       <Card>
         <CardHeader title='Librarian Dashboard' />
         <GridContainer container spacing={4}>
-          <GridItem item xs={12} sm={4}>
-            {/* <DateField defaultDate={fromDate} change={handleChangeFromDate} /> */}
+          <GridItem item xs={12} sm={6}>
+            <NavLink to='/book_management/issue'>
+              <Button primary='true'>Issue books</Button>
+            </NavLink>
           </GridItem>
-          <GridItem item xs={12} sm={4}>
-            {/* <DateFieldToDate defaultDate={toDate} change={handleChangeToDate} /> */}
-          </GridItem>
-          <GridItem item xs={12} sm={4}>
+
+          <GridItem item xs={12} sm={6}>
             <Select
               newId={bookStatus}
               array={status}
