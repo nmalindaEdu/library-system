@@ -52,7 +52,14 @@ exports.create = async (req, res) => {
 exports.list = async (req, res) => {
   try {
     const users = await knex('user')
-      .select('*')
+      .select(
+        'user_id',
+        'user_full_name',
+        'user_tel_no',
+        'user_name',
+        'user_privilege',
+        'user_added_date'
+      )
       .where('user_privilege', 'member');
 
     if (users && users.length !== 0) {
