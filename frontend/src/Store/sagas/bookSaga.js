@@ -3,7 +3,9 @@ import axios from '../../Config/axios';
 import {
   FETCH_BOOK_DATA,
   fetchBookDataSuccess,
-  fetchDataFail
+  fetchDataFail,
+  DELETE_BOOK,
+  fetchBookData
 } from '../reducers/bookReducer';
 
 function* fetchBooksData() {
@@ -22,6 +24,31 @@ function* fetchBooksData() {
 export function* fetchBooksDataSaga() {
   try {
     yield takeLatest(FETCH_BOOK_DATA, fetchBooksData);
+  } catch (error) {
+    yield put(fetchDataFail(error));
+  }
+}
+
+function* deleteBook({ bookId }) {
+  try {
+    const response = yield call(axios.delete, `books/${bookId}`);
+    if (response) {
+      if (response.data.success === true) {
+        yield put(fetchBookData());
+      } else {
+        yield put(fetchDataFail());
+      }
+    } else {
+      yield put(fetchDataFail());
+    }
+  } catch (error) {
+    yield put(fetchDataFail(error));
+  }
+}
+
+export function* deleteBookSaga() {
+  try {
+    yield takeLatest(DELETE_BOOK, deleteBook);
   } catch (error) {
     yield put(fetchDataFail(error));
   }

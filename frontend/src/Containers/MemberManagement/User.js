@@ -72,7 +72,6 @@ const UserManagement = () => {
         clickOpen={open}
         handleClose={handleClose}
       />
-
       <ToolBar>
         <NavLink to='/member_management/add_member'>
           <Button primary='true'>Add user</Button>
