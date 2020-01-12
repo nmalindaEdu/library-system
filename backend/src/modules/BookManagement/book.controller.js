@@ -112,9 +112,9 @@ exports.update = async (req, res) => {
   if (validationUpdateResult === true) {
     try {
       if (checkDuplicate.length === 1) {
-        if (checkDuplicate[0].book_id === parseInt(req.params.bookId, 0)) {
+        if (checkDuplicate[0].book_id === parseInt(req.params.book, 0)) {
           await knex('book')
-            .where('book_id', req.params.bookId)
+            .where('book_id', req.params.book)
             .update(book);
 
           res.json({
@@ -122,7 +122,7 @@ exports.update = async (req, res) => {
             success: true,
             data: { ...book },
             error: {},
-            message: `The book id ${req.params.bookId} is Updated successfully`
+            message: `The book id ${req.params.book} is Updated successfully`
           });
         } else {
           res.json({
@@ -138,7 +138,7 @@ exports.update = async (req, res) => {
         }
       } else if (checkDuplicate.length === 0) {
         await knex('book')
-          .where('book_id', req.params.bookId)
+          .where('book_id', req.params.book)
           .update(book);
 
         res.json({
@@ -146,7 +146,7 @@ exports.update = async (req, res) => {
           success: true,
           data: { ...book },
           error: {},
-          message: `The book id ${req.params.bookId} is Updated successfully`
+          message: `The book id ${req.params.book} is Updated successfully`
         });
       } else {
         res.json({
@@ -179,13 +179,13 @@ exports.update = async (req, res) => {
 
 exports.deleteBook = async (req, res) => {
   await knex('book')
-    .where('book_id', req.params.bookId)
+    .where('book_id', req.params.book)
     .del();
 
   res.json({
     status: 200,
     success: true,
     error: {},
-    message: `Book ${req.params.bookId} Successfully Deleted`
+    message: `Book ${req.params.book} Successfully Deleted`
   });
 };

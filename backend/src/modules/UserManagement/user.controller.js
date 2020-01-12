@@ -130,9 +130,9 @@ exports.update = async (req, res) => {
   if (validationUpdateResult === true) {
     try {
       if (checkDuplicate.length === 1) {
-        if (checkDuplicate[0].user_id === parseInt(req.params.userId, 0)) {
+        if (checkDuplicate[0].user_id === parseInt(req.params.user, 0)) {
           await knex('user')
-            .where('user_id', req.params.userId)
+            .where('user_id', req.params.user)
             .update({
               ...user,
               ['user_password']: knex.raw(`SHA2(${user.user_password},224)`)
@@ -143,7 +143,7 @@ exports.update = async (req, res) => {
             success: true,
             data: { ...user },
             error: {},
-            message: `The user id ${req.params.userId} is Updated successfully`
+            message: `The user id ${req.params.user} is Updated successfully`
           });
         } else {
           res.json({
@@ -159,7 +159,7 @@ exports.update = async (req, res) => {
         }
       } else if (checkDuplicate.length === 0) {
         await knex('user')
-          .where('user_id', req.params.userId)
+          .where('user_id', req.params.user)
           .update({
             ...user,
             ['user_password']: knex.raw(`SHA2(${user.user_password},224)`)
@@ -170,7 +170,7 @@ exports.update = async (req, res) => {
           success: true,
           data: { ...user },
           error: {},
-          message: `The user id ${req.params.userId} is Updated successfully`
+          message: `The user id ${req.params.user} is Updated successfully`
         });
       } else {
         res.json({
@@ -203,13 +203,13 @@ exports.update = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   await knex('user')
-    .where('user_id', req.params.userId)
+    .where('user_id', req.params.user)
     .del();
 
   res.json({
     status: 200,
     success: true,
     error: {},
-    message: `User ${req.params.userId} Successfully Deleted`
+    message: `User ${req.params.user} Successfully Deleted`
   });
 };
