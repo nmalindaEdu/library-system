@@ -2,6 +2,7 @@ export const FETCH_USER_DATA = 'lms/user/FETCH_USER_DATA';
 export const FETCH_USER_DATA_SUCCESS = 'lms/user/FETCH_USER_DATA_SUCCESS';
 export const FETCH_DATA_FAIL = 'lms/user/FETCH_DATA_FAIL';
 export const SET_USER_NAME = 'lms/user/SET_USER_NAME';
+export const DELETE_USER = 'lms/user/DELETE_USER';
 
 const initialState = {
   loading: false,
@@ -37,4 +38,7 @@ export const fetchDataFail = (error) => {
 };
 export const setUserName = (userName) => {
   return { type: SET_USER_NAME, userName };
+};
+export const deleteUser = (userId) => {
+  return { type: DELETE_USER, userId };
 };
