@@ -72,7 +72,7 @@ const UserManagement = () => {
             },
 
             {
-              title: 'User added date',
+              title: 'Added date',
               field: 'user_added_date',
               customSort: (a, b) => dateComparatorRev(a, b, 'user_added_date')
             },
