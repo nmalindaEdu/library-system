@@ -7,11 +7,15 @@ const App = () => {
   const Dashboard = React.lazy(() =>
     import('./Containers/Dashboard/Dashboard')
   );
+  const Members = React.lazy(() =>
+    import('./Containers/MemberManagement/User')
+  );
 
   return (
     <Router>
       <Layout path='/'>
         <Dashboard path='/' />
+        <Members path='/members' />
       </Layout>
     </Router>
   );

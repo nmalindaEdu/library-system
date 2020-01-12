@@ -1,10 +1,13 @@
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { dashboardReducer } from './reducers';
+import { dashboardReducer, userReducer } from './reducers';
 import initSagas from './initSagas';
 
 const getStore = () => {
-  const reducers = combineReducers({ dashboard: dashboardReducer });
+  const reducers = combineReducers({
+    dashboard: dashboardReducer,
+    user: userReducer
+  });
 
   const composeEnhancers =
     process.env.NODE_ENV !== 'production' &&
